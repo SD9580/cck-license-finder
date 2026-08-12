@@ -87,6 +87,36 @@ h2{font-family:var(--display);font-weight:800;font-size:clamp(1.8rem,3.4vw,2.6re
   .ticket::after{margin:24px -20px 0}
   .result-cta{margin:0 -20px;padding:20px}
 }
+
+/* ---------- PRINT ---------- */
+.print-head{display:none}
+.q-actions{display:flex;gap:18px;align-items:center;flex-wrap:wrap;margin-top:10px}
+.q-actions .q-restart{margin-top:0}
+.q-print{background:none;border:none;font-family:var(--mono);font-size:.75rem;color:var(--steel);cursor:pointer;text-decoration:underline}
+.q-print:hover{color:var(--tomato)}
+@media print{
+  body{background:#fff !important;color:#000;font-size:11pt}
+  .quiz-sec{background:#fff !important;color:#000;padding:0}
+  .quiz-pitch{display:none}
+  .quiz-flex{display:block}
+  .ticket-rail{display:none}
+  .wrap{padding:0;max-width:none;margin:0}
+  .ticket{box-shadow:none;padding:0;background:#fff}
+  .ticket::after{display:none}
+  .ticket-head{color:#000;border-bottom:2px solid #000}
+  .print-head{display:block !important;font-family:var(--mono);font-size:9pt;line-height:1.5;border-bottom:1px dashed #666;padding-bottom:10px;margin-bottom:14px}
+  .print-head b{font-size:11pt}
+  .result-stamp{color:#000;border-color:#000;transform:none}
+  .result-title{font-size:15pt}
+  .result-flag{border-color:#000;page-break-inside:avoid}
+  .result-steps li{page-break-inside:avoid;border-top:1px dashed #999}
+  .result-steps li::before{color:#000}
+  .result-cta{background:#fff !important;color:#000 !important;border:2px solid #000;margin:16px 0 0;padding:12px;text-align:left;page-break-inside:avoid}
+  .result-cta p{color:#000 !important;margin-bottom:0}
+  .result-cta .btn{display:none}
+  .q-actions{display:none !important}
+  .result-disclaimer{color:#444}
+}
 </style>
 </head>
 <body>
@@ -265,7 +295,8 @@ h2{font-family:var(--display);font-weight:800;font-size:clamp(1.8rem,3.4vw,2.6re
   }
 
   function renderResult(res){
-    var html = '<div class="result-stamp">' + res.stamp + '</div>';
+    var html = '<div class="print-head"><b>Clarence Creative Kitchen</b><br>9580 Main Street, Clarence, NY 14031<br>clarencecreativekitchen.com<br><span id="print-date"></span></div>';
+    html += '<div class="result-stamp">' + res.stamp + '</div>';
     html += '<div class="result-title">' + res.title + '</div>';
     html += '<div class="result-body">' + res.body + '</div>';
     if(res.flag){
@@ -277,7 +308,7 @@ h2{font-family:var(--display);font-weight:800;font-size:clamp(1.8rem,3.4vw,2.6re
     html += '<div class="result-cta"><p>' + (res.cta || 'This is a lot easier with a certified commissary in your corner.') + '</p>'
           + '<a class="btn tomato" id="cck-cta" href="' + SITE_URL + '" target="_top">Let us help you with the process →</a></div>';
     html += '<div class="result-disclaimer">General guidance only — licensing depends on your exact product and process. We\'ll help you confirm the details with ECDOH or Ag &amp; Markets.</div>';
-    html += '<button class="q-restart" id="q-restart">start over</button>';
+    html += '<div class="q-actions"><button class="q-restart" id="q-restart">start over</button><button class="q-print" id="q-print">print this ticket</button></div>';
     body.innerHTML = html;
     var cta = document.getElementById('cck-cta');
     if(cta && IN_FRAME){
@@ -286,6 +317,10 @@ h2{font-family:var(--display);font-weight:800;font-size:clamp(1.8rem,3.4vw,2.6re
         try { window.parent.postMessage({ cckScrollToForm: true }, '*'); } catch(err){}
       });
     }
+    var pd = document.getElementById('print-date');
+    if(pd) pd.textContent = 'Printed ' + new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+    var pb = document.getElementById('q-print');
+    if(pb) pb.addEventListener('click', function(){ window.print(); });
     var r = document.getElementById('q-restart');
     if(r) r.addEventListener('click', restart);
     sync();
