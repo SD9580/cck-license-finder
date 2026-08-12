@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>License Finder — Clarence Creative Kitchen</title>
+<meta name="description" content="Answer a few questions and find out which New York food license your business likely needs — Erie County DOH, Article 20-C, or the Home Processor exemption.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Karla:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --tile:#F7F4EE;
+  --tile-deep:#EFEAE0;
+  --ink:#1F241F;
+  --awning:#205C40;
+  --awning-deep:#14402C;
+  --tomato:#CE3A2B;
+  --kraft:#E9DFCC;
+  --kraft-deep:#DECFB2;
+  --steel:#8E979B;
+  --white:#FFFFFF;
+  --display:'Bricolage Grotesque',sans-serif;
+  --body:'Karla',sans-serif;
+  --mono:'IBM Plex Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+body{font-family:var(--body);color:var(--ink);background:var(--ink);line-height:1.6;font-size:17px}
+a{color:inherit}
+.wrap{max-width:1160px;margin:0 auto;padding:0 24px}
+
+h2{font-family:var(--display);font-weight:800;font-size:clamp(1.8rem,3.4vw,2.6rem);letter-spacing:-.02em;line-height:1.1}
+.sec-eyebrow{font-family:var(--mono);font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--awning);margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.sec-eyebrow::before{content:"";width:28px;height:2px;background:var(--tomato)}
+
+.btn{display:inline-block;font-family:var(--body);font-weight:700;text-decoration:none;border:2px solid var(--ink);padding:10px 20px;background:var(--ink);color:var(--tile);cursor:pointer;font-size:.95rem;transition:transform .12s ease, background .12s ease}
+.btn:focus-visible,a:focus-visible,button:focus-visible{outline:3px solid var(--tomato);outline-offset:2px}
+.btn.tomato{background:var(--tomato);border-color:var(--tomato);color:var(--white)}
+.btn.tomato:hover{background:#A82C20;border-color:#A82C20}
+
+/* ---------- QUIZ (signature) ---------- */
+.quiz-sec{background:var(--ink);color:var(--tile);position:relative;padding:60px 0 66px}
+.quiz-sec .sec-eyebrow{color:var(--kraft)}
+.quiz-flex{display:grid;grid-template-columns:1fr 1.1fr;gap:56px;align-items:start}
+@media(max-width:900px){.quiz-flex{grid-template-columns:1fr}}
+.quiz-pitch p{color:rgba(247,244,238,.85);margin-top:14px;font-size:1.05rem}
+.quiz-pitch ul{margin:22px 0 0;list-style:none}
+.quiz-pitch li{padding:10px 0;border-top:1px solid rgba(247,244,238,.2);font-size:.95rem}
+.quiz-pitch li b{font-family:var(--mono);font-size:.78rem;letter-spacing:.08em;color:var(--kraft);text-transform:uppercase;display:block}
+/* the ticket */
+.ticket-rail{background:linear-gradient(180deg,#3A3F3A,#2A2F2A);height:16px;border-radius:8px 8px 0 0;position:relative;box-shadow:inset 0 -2px 0 rgba(0,0,0,.4)}
+.ticket-rail::before,.ticket-rail::after{content:"";position:absolute;top:4px;width:8px;height:8px;border-radius:50%;background:#111}
+.ticket-rail::before{left:18px}.ticket-rail::after{right:18px}
+.ticket{background:var(--white);color:var(--ink);font-family:var(--mono);padding:30px 30px 0;position:relative;box-shadow:0 18px 40px rgba(0,0,0,.45)}
+.ticket::after{content:"";display:block;height:22px;margin:28px -30px 0;background:
+  linear-gradient(45deg,transparent 33.33%,var(--white) 33.33%,var(--white) 66.66%,transparent 66.66%),
+  linear-gradient(-45deg,transparent 33.33%,var(--white) 33.33%,var(--white) 66.66%,transparent 66.66%);
+  background-size:16px 22px;background-position:0 100%;background-repeat:repeat-x;transform:translateY(1px)}
+.ticket-head{border-bottom:2px dashed var(--steel);padding-bottom:14px;margin-bottom:18px;display:flex;justify-content:space-between;font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;color:#4A4F4A}
+.ticket-head b{color:var(--ink)}
+.q-step{font-size:.72rem;color:var(--steel);margin-bottom:8px;letter-spacing:.1em}
+.q-text{font-family:var(--display);font-weight:700;font-size:1.25rem;line-height:1.25;margin-bottom:18px;letter-spacing:-.01em}
+.q-opts{display:flex;flex-direction:column;gap:10px}
+.q-opt{font-family:var(--mono);font-size:.9rem;text-align:left;background:var(--tile);border:2px solid var(--ink);padding:13px 16px;cursor:pointer;transition:background .12s ease}
+.q-opt:hover{background:var(--kraft)}
+.q-log{margin-top:18px;font-size:.78rem;color:#4A4F4A;border-top:2px dashed var(--steel);padding-top:12px}
+.q-log div{display:flex;justify-content:space-between;gap:12px;padding:3px 0}
+.q-log .val{color:var(--awning);font-weight:600;text-align:right}
+.q-restart{background:none;border:none;font-family:var(--mono);font-size:.75rem;color:var(--steel);cursor:pointer;text-decoration:underline;margin-top:10px}
+.result-stamp{display:inline-block;border:3px solid var(--tomato);color:var(--tomato);font-family:var(--mono);font-weight:600;font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;padding:6px 12px;transform:rotate(-2deg);margin-bottom:16px}
+.result-title{font-family:var(--display);font-weight:800;font-size:1.4rem;line-height:1.2;margin-bottom:10px;letter-spacing:-.01em}
+.result-body{font-family:var(--body);font-size:.95rem;margin-bottom:18px}
+.result-steps{list-style:none;margin-bottom:20px}
+.result-steps li{font-size:.85rem;padding:9px 0;border-top:1px dashed var(--steel);display:flex;gap:12px}
+.result-steps li::before{content:"☐";color:var(--awning);font-size:1rem}
+.result-flag{border:2px dashed var(--tomato);padding:14px 16px;margin-bottom:20px;font-family:var(--body);font-size:.88rem;line-height:1.55}
+.result-flag b{font-family:var(--mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--tomato);display:block;margin-bottom:6px}
+.result-cta{background:var(--awning);color:var(--tile);margin:0 -30px;padding:22px 30px;text-align:center}
+.result-cta p{font-family:var(--body);font-size:.95rem;margin-bottom:12px;color:rgba(247,244,238,.9)}
+.result-disclaimer{font-size:.68rem;color:var(--steel);padding:12px 0 2px;font-family:var(--body)}
+
+@media(max-width:520px){
+  .wrap{padding:0 16px}
+  .quiz-sec{padding:44px 0 48px}
+  .ticket{padding:24px 20px 0}
+  .ticket::after{margin:24px -20px 0}
+  .result-cta{margin:0 -20px;padding:20px}
+}
+</style>
+</head>
+<body>
+
+<section class="quiz-sec" id="start">
+  <div class="wrap">
+    <div class="quiz-flex">
+      <div class="quiz-pitch">
+        <div class="sec-eyebrow">Free tool · 60 seconds</div>
+        <h2>Not sure what license your food business needs?</h2>
+        <p>Two or three questions. Most people who ask us this are surprised by the answer — and it's the reason a lot of good food businesses never get started.</p>
+        <p>New York's food rules are a maze: Ag &amp; Markets 20-C vs. Erie County DOH, home processor exemptions, mobile permits, fire suppression. Answer a few questions and we'll print you a starting roadmap — then help you actually walk it.</p>
+        <ul>
+          <li><b>Step 1</b>Tell us what you want to make and sell</li>
+          <li><b>Step 2</b>Get your likely license path &amp; first steps</li>
+          <li><b>Step 3</b>Book a tour — we'll walk you through the process</li>
+        </ul>
+      </div>
+      <div>
+        <div class="ticket-rail" aria-hidden="true"></div>
+        <div class="ticket" id="ticket" aria-live="polite">
+          <div class="ticket-head"><span><b>CCK</b> License Finder</span><span id="ticket-no">Ticket #0001</span></div>
+          <div id="quiz-body"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function(){
+  /* ---- Set this to your live contact page ---- */
+  var CONTACT_URL = 'https://www.clarencecreativekitchen.com/contact';
+
+  var body = document.getElementById('quiz-body');
+  var ticketNo = document.getElementById('ticket-no');
+  ticketNo.textContent = 'Ticket #' + String(Math.floor(1000 + Math.random()*9000));
+
+  var answers = [];
+
+  var results = {
+    truck_ansul: {
+      stamp: 'MOBILE · HOT LINE',
+      title: 'Mobile Food Service Permit + Fire Suppression',
+      body: 'Cooking with grease-producing equipment on board (fryers, griddles, charbroilers) means you\'ll likely need an Erie County DOH Mobile Food Service Permit, a commissary agreement, and a hood with an ANSUL-type fire suppression system inspected by your local fire authority. Bonus: CCK truck members get free vending hotspots along Main Street.',
+      cta: 'We help our truck members sort out which towns require what, and we write the commissary letters ourselves.',
+      flag: 'Your Erie County permit covers the county — but it does not get you in the door of any given town. Many towns and villages require their own vending permit on top of it: separate application, separate fee, sometimes their own fire inspection. Work three towns this season and that is three sets of paperwork, each on its own timeline.',
+      steps: ['Erie County DOH mobile food service permit application','Commissary letter (CCK provides this for tenants)','ANSUL / UL-300 fire suppression install + inspection','Truck plan review, plumbing & propane checks','Town-by-town vending permits for every municipality you plan to work','Initial inspection — ECDOH meets you at the commissary']
+    },
+    truck_cold: {
+      stamp: 'MOBILE · COLD PREP',
+      title: 'Mobile Food Service Permit (No Suppression Hood)',
+      body: 'If you\'re not cooking with grease-producing equipment on the truck, you\'ll still need an Erie County DOH mobile permit and a commissary agreement — but you can likely skip the ANSUL system, which saves serious money. Bonus: CCK truck members get free vending hotspots along Main Street.',
+      cta: 'We help our truck members sort out which towns require what, and we write the commissary letters ourselves.',
+      flag: 'Your Erie County permit covers the county — but it does not get you in the door of any given town. Many towns and villages require their own vending permit on top of it: separate application, separate fee, sometimes their own fire inspection. Work three towns this season and that is three sets of paperwork, each on its own timeline.',
+      steps: ['Erie County DOH mobile food service permit application','Commissary letter (CCK provides this for tenants)','Truck plan review','Town-by-town vending permits for every municipality you plan to work','Initial inspection — ECDOH meets you at the commissary']
+    },
+    cottage: {
+      stamp: 'HOME PROCESSOR',
+      title: 'You May Qualify for the NYS Home Processor Exemption',
+      body: 'Certain low-risk, shelf-stable foods — breads, cookies, fruit jams, candy and the like — can be made in your home kitchen under NYS Ag & Markets\' Home Processor exemption, no license fee required. But the exempt product list is strict, and the moment you want commercial equipment, real volume, or a product off the list, you graduate to a 20-C license in a licensed kitchen like CCK.',
+      steps: ['Check the Ag & Markets exempt foods list — your exact product matters','Register as a Home Processor with your Ag & Markets regional office (free)','Label requirements: ingredients, allergens, net weight, your name & address','Outgrowing it? A 20-C license at CCK is the next step — we\'ll walk you through it']
+    },
+    twentyc_process: {
+      stamp: '20-C + PROCESS REVIEW',
+      title: '20-C License + Cornell Scheduled Process Review',
+      body: 'Hot sauce, salsa, pickles, dressings — anything acidified or pH-dependent — can\'t be made under the home exemption. Before Ag & Markets will issue your 20-C, your recipe needs a scheduled process review from a recognized process authority: the Cornell Food Venture Center (reached through Cornell Cooperative Extension). Many CCK members have been through exactly this — we know the drill.',
+      steps: ['Submit your recipe & process to the Cornell Food Venture Center for review','Receive your scheduled process letter (pH targets, fill temps, hold times)','Apply for the Ag & Markets Article 20-C license','Schedule your kitchen inspection at CCK','Label review: ingredients, allergens, net weight, business address']
+    },
+    twentyc: {
+      stamp: 'AG & MARKETS 20-C',
+      title: 'NYS Article 20-C Food Processing License',
+      body: 'Selling packaged food wholesale, at real volume, or anything refrigerated or frozen puts you under NYS Agriculture & Markets — and a 20-C license requires processing in a licensed commercial kitchen, which is exactly what CCK is.',
+      steps: ['Apply for the Ag & Markets Article 20-C license','Schedule your kitchen inspection at CCK','Plan your cold chain: production, storage & transport temps','Label review: ingredients, allergens, net weight, business address']
+    },
+    doh: {
+      stamp: 'ERIE COUNTY DOH',
+      title: 'Food Service Establishment / Catering Permit',
+      body: 'Prepared food served for immediate consumption — catering, meal prep, delivery, ghost kitchen concepts — is regulated by the Erie County Department of Health. You\'ll need a permitted kitchen as your base of operations.',
+      steps: ['Erie County DOH food service permit application','Base of operations in a permitted kitchen (that\'s us)','Initial on-site inspection — ECDOH meets you at the kitchen','Menu & process review with the sanitarian','Insurance & workers\' comp documentation']
+    }
+  };
+
+  var questions = [
+    {
+      label: 'What are you making?',
+      log: 'Product',
+      opts: [
+        {t:'Food from a truck or trailer', v:'truck'},
+        {t:'Packaged / shelf-stable foods (jams, baked goods, sauces)', v:'packaged'},
+        {t:'Catering or event food', v:'catering'},
+        {t:'Meal prep, delivery, or ghost kitchen', v:'prepared'}
+      ]
+    }
+  ];
+
+  var q2_truck = {
+    label: 'Will you cook on the truck with fryers, griddles, or charbroilers?',
+    log: 'Grease cooking',
+    opts: [
+      {t:'Yes — hot cooking with grease on board', v:'yes'},
+      {t:'No — cold prep, reheating, or all cooking done at the commissary', v:'no'}
+    ]
+  };
+
+  var q2_packaged = {
+    label: 'What best describes your product?',
+    log: 'Product type',
+    opts: [
+      {t:'Shelf-stable baked goods, jams, or candy', v:'simple'},
+      {t:'Hot sauce, salsa, pickles, dressings — anything acidified', v:'acidified'},
+      {t:'Refrigerated or frozen products', v:'refrigerated'}
+    ]
+  };
+
+  var q3_scale = {
+    label: 'How do you plan to sell?',
+    log: 'Scale',
+    opts: [
+      {t:'Small-batch, direct to consumers — markets, fairs, online', v:'direct'},
+      {t:'Wholesale to stores & restaurants, or scaling up in a commercial kitchen', v:'scale'}
+    ]
+  };
+
+  function renderQuestion(q, stepNum, totalSteps){
+    var html = '<div class="q-step">QUESTION ' + stepNum + '</div>';
+    html += '<div class="q-text">' + q.label + '</div>';
+    html += '<div class="q-opts">';
+    q.opts.forEach(function(o, i){
+      html += '<button class="q-opt" data-v="' + o.v + '">' + o.t + '</button>';
+    });
+    html += '</div>';
+    html += renderLog();
+    body.innerHTML = html;
+    body.querySelectorAll('.q-opt').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        answers.push({label: q.log, value: btn.textContent, v: btn.getAttribute('data-v')});
+        advance();
+      });
+    });
+    sync();
+  }
+
+  function renderLog(){
+    if(!answers.length) return '';
+    var html = '<div class="q-log">';
+    answers.forEach(function(a){
+      html += '<div><span>' + a.label + '</span><span class="val">' + a.value + '</span></div>';
+    });
+    html += '</div><button class="q-restart" id="q-restart">start over</button>';
+    return html;
+  }
+
+  function advance(){
+    var first = answers[0].v;
+    if(answers.length === 1){
+      if(first === 'truck'){ renderQuestion(q2_truck, 2, 2); }
+      else if(first === 'packaged'){ renderQuestion(q2_packaged, 2, 2); }
+      else if(first === 'catering' || first === 'prepared'){ renderResult(results.doh); }
+    } else if(answers.length === 2){
+      if(first === 'truck'){
+        renderResult(answers[1].v === 'yes' ? results.truck_ansul : results.truck_cold);
+      } else if(first === 'packaged'){
+        var p = answers[1].v;
+        if(p === 'acidified'){ renderResult(results.twentyc_process); }
+        else if(p === 'refrigerated'){ renderResult(results.twentyc); }
+        else { renderQuestion(q3_scale, 3, 3); }
+      }
+    } else if(answers.length === 3){
+      renderResult(answers[2].v === 'direct' ? results.cottage : results.twentyc);
+    }
+    var r = document.getElementById('q-restart');
+    if(r) r.addEventListener('click', restart);
+  }
+
+  function renderResult(res){
+    var html = '<div class="result-stamp">' + res.stamp + '</div>';
+    html += '<div class="result-title">' + res.title + '</div>';
+    html += '<div class="result-body">' + res.body + '</div>';
+    if(res.flag){
+      html += '<div class="result-flag"><b>Heads up — the one people miss</b>' + res.flag + '</div>';
+    }
+    html += '<ul class="result-steps">';
+    res.steps.forEach(function(s){ html += '<li>' + s + '</li>'; });
+    html += '</ul>';
+    html += '<div class="result-cta"><p>' + (res.cta || 'This is a lot easier with a certified commissary in your corner.') + '</p>'
+          + '<a class="btn tomato" href="' + CONTACT_URL + '" target="_top">Let us help you with the process →</a></div>';
+    html += '<div class="result-disclaimer">General guidance only — licensing depends on your exact product and process. We\'ll help you confirm the details with ECDOH or Ag &amp; Markets.</div>';
+    html += '<button class="q-restart" id="q-restart">start over</button>';
+    body.innerHTML = html;
+    var r = document.getElementById('q-restart');
+    if(r) r.addEventListener('click', restart);
+    sync();
+  }
+
+  function restart(){
+    answers = [];
+    renderQuestion(questions[0], 1, 2);
+  }
+
+  /* Tell the parent page how tall we are so the iframe can resize itself. */
+  function sync(){
+    var h = document.documentElement.scrollHeight;
+    try { window.parent.postMessage({ cckLicenseFinderHeight: h }, '*'); } catch(e){}
+  }
+  window.addEventListener('resize', sync);
+  window.addEventListener('load', sync);
+  if (document.fonts && document.fonts.ready) { document.fonts.ready.then(sync); }
+
+  renderQuestion(questions[0], 1, 2);
+})();
+</script>
+</body>
+</html>
