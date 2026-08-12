@@ -118,8 +118,10 @@ h2{font-family:var(--display);font-weight:800;font-size:clamp(1.8rem,3.4vw,2.6re
 
 <script>
 (function(){
-  /* ---- Set this to your live contact page ---- */
-  var CONTACT_URL = 'https://www.clarencecreativekitchen.com/contact';
+  /* Single-page site: the CTA scrolls the parent page to the "Find out more" form.
+     If this page is opened on its own, the button falls back to the site homepage. */
+  var SITE_URL = 'https://www.clarencecreativekitchen.com/';
+  var IN_FRAME = (function(){ try { return window.self !== window.top; } catch(e){ return true; } })();
 
   var body = document.getElementById('quiz-body');
   var ticketNo = document.getElementById('ticket-no');
@@ -273,10 +275,17 @@ h2{font-family:var(--display);font-weight:800;font-size:clamp(1.8rem,3.4vw,2.6re
     res.steps.forEach(function(s){ html += '<li>' + s + '</li>'; });
     html += '</ul>';
     html += '<div class="result-cta"><p>' + (res.cta || 'This is a lot easier with a certified commissary in your corner.') + '</p>'
-          + '<a class="btn tomato" href="' + CONTACT_URL + '" target="_top">Let us help you with the process →</a></div>';
+          + '<a class="btn tomato" id="cck-cta" href="' + SITE_URL + '" target="_top">Let us help you with the process →</a></div>';
     html += '<div class="result-disclaimer">General guidance only — licensing depends on your exact product and process. We\'ll help you confirm the details with ECDOH or Ag &amp; Markets.</div>';
     html += '<button class="q-restart" id="q-restart">start over</button>';
     body.innerHTML = html;
+    var cta = document.getElementById('cck-cta');
+    if(cta && IN_FRAME){
+      cta.addEventListener('click', function(e){
+        e.preventDefault();
+        try { window.parent.postMessage({ cckScrollToForm: true }, '*'); } catch(err){}
+      });
+    }
     var r = document.getElementById('q-restart');
     if(r) r.addEventListener('click', restart);
     sync();
