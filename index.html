@@ -333,7 +333,9 @@ h2{font-family:var(--display);font-weight:800;font-size:clamp(1.8rem,3.4vw,2.6re
 
   /* Tell the parent page how tall we are so the iframe can resize itself. */
   function sync(){
-    var h = document.documentElement.scrollHeight;
+    var sec = document.querySelector('.quiz-sec');
+    var h = sec ? Math.ceil(sec.getBoundingClientRect().height) + 2
+                : document.documentElement.scrollHeight;
     try { window.parent.postMessage({ cckLicenseFinderHeight: h }, '*'); } catch(e){}
   }
   window.addEventListener('resize', sync);
