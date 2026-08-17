@@ -194,6 +194,14 @@ h2{font-family:var(--display);font-weight:800;font-size:clamp(1.8rem,3.4vw,2.6re
       body: 'Selling packaged food wholesale, at real volume, or anything refrigerated or frozen puts you under NYS Agriculture & Markets — and a 20-C license requires processing in a licensed commercial kitchen, which is exactly what CCK is.',
       steps: ['Apply for the Ag & Markets Article 20-C license','Schedule your kitchen inspection at CCK','Plan your cold chain: production, storage & transport temps','Label review: ingredients, allergens, net weight, business address']
     },
+    mealprep_packaged: {
+      stamp: '20-C \u00b7 PACKAGED MEALS',
+      title: 'Likely Article 20-C \u2014 and possibly both',
+      cta: 'We have members on both sides of this line, and we can help you work out which side you are on.',
+      body: 'Meal prep sits right on the seam between the two regulators. Food served for immediate consumption is Erie County DOH territory. Food produced in batches, packaged, labeled and sold to be refrigerated or frozen and reheated later looks like food processing \u2014 which is NYS Agriculture & Markets, Article 20-C. Plenty of meal prep businesses end up holding both: a DOH permit for the kitchen operation and a 20-C for the packaged product line.',
+      flag: 'What actually decides it: whether your meals carry ingredient and allergen labels with a use-by date, whether you produce in batches ahead of orders rather than to order, and whether you sell only direct or also through gyms, offices and retail partners. Get classified before you scale \u2014 redoing labels, processes and cold chain after the fact is expensive.',
+      steps: ['Describe your exact operation to both Erie County DOH and Ag & Markets \u2014 batch size, packaging, labeling, cold chain, sales channels','Plan your cold chain: production, chilling or freezing, storage and transport temps','Label review: ingredients, allergens, net weight, business address, use-by dating','Produce in a licensed commercial kitchen \u2014 required on either path','Reassess when you add wholesale accounts; that alone often triggers 20-C']
+    },
     doh: {
       stamp: 'ERIE COUNTY DOH',
       title: 'Food Service Establishment / Catering Permit',
@@ -231,6 +239,16 @@ h2{font-family:var(--display);font-weight:800;font-size:clamp(1.8rem,3.4vw,2.6re
       {t:'Shelf-stable baked goods, jams, or candy', v:'simple'},
       {t:'Hot sauce, salsa, pickles, dressings — anything acidified', v:'acidified'},
       {t:'Refrigerated or frozen products', v:'refrigerated'}
+    ]
+  };
+
+  var q2_prepared = {
+    label: 'How does the customer actually receive the food?',
+    log: 'Delivery form',
+    opts: [
+      {t:'Hot or fresh, eaten the same day', v:'immediate'},
+      {t:'Packaged, labeled meals they refrigerate or freeze and reheat later', v:'packaged'},
+      {t:'Through gyms, offices, or retail partners', v:'wholesale'}
     ]
   };
 
@@ -277,10 +295,13 @@ h2{font-family:var(--display);font-weight:800;font-size:clamp(1.8rem,3.4vw,2.6re
     if(answers.length === 1){
       if(first === 'truck'){ renderQuestion(q2_truck, 2, 2); }
       else if(first === 'packaged'){ renderQuestion(q2_packaged, 2, 2); }
-      else if(first === 'catering' || first === 'prepared'){ renderResult(results.doh); }
+      else if(first === 'catering'){ renderResult(results.doh); }
+      else if(first === 'prepared'){ renderQuestion(q2_prepared, 2, 2); }
     } else if(answers.length === 2){
       if(first === 'truck'){
         renderResult(answers[1].v === 'yes' ? results.truck_ansul : results.truck_cold);
+      } else if(first === 'prepared'){
+        renderResult(answers[1].v === 'immediate' ? results.doh : results.mealprep_packaged);
       } else if(first === 'packaged'){
         var p = answers[1].v;
         if(p === 'acidified'){ renderResult(results.twentyc_process); }
