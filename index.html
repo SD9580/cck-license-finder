@@ -117,6 +117,21 @@ h2{font-family:var(--display);font-weight:800;font-size:clamp(1.8rem,3.4vw,2.6re
   .q-actions{display:none !important}
   .result-disclaimer{color:#444}
 }
+
+.result-links{margin:16px 0 0;padding-top:14px;border-top:1px dashed var(--steel)}
+.result-links .lbl{font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--steel);margin-bottom:8px}
+.result-links a{display:block;font-family:var(--mono);font-size:.8rem;color:var(--awning);text-decoration:underline;text-underline-offset:2px;padding:5px 0;word-break:break-word}
+.result-links a:hover{color:var(--tomato)}
+.result-links .url{display:none}
+.print-logo{display:none}
+.print-contact{display:none}
+@media print{
+  .print-logo{display:block !important;width:200px;height:auto;margin-bottom:10px}
+  .print-contact{display:block !important;font-family:var(--mono);font-size:9pt;line-height:1.6}
+  .result-links{page-break-inside:avoid}
+  .result-links a{color:#000;text-decoration:none;font-weight:600}
+  .result-links .url{display:block;font-size:7.5pt;color:#444;font-weight:400;word-break:break-all;padding-top:1px}
+}
 </style>
 </head>
 <body>
@@ -162,6 +177,7 @@ h2{font-family:var(--display);font-weight:800;font-size:clamp(1.8rem,3.4vw,2.6re
   var results = {
     truck_ansul: {
       stamp: 'MOBILE · HOT LINE',
+      links: [{t:'ECDOH Foodservice Facility Permit Application (tick “Mobile Food Truck”)', u:'https://www3.erie.gov/envhealth/sites/www3.erie.gov.envhealth/files/2023-03/foodservicepermitapplication.pdf'}],
       title: 'Mobile Food Service Permit + Fire Suppression',
       body: 'Cooking with grease-producing equipment on board (fryers, griddles, charbroilers) means you\'ll likely need an Erie County DOH Mobile Food Service Permit, a commissary agreement, and a hood with an ANSUL-type fire suppression system inspected by your local fire authority. Bonus: CCK truck members get free vending hotspots along Main Street.',
       cta: 'We help our truck members sort out which towns require what, and we write the commissary letters ourselves.',
@@ -170,6 +186,7 @@ h2{font-family:var(--display);font-weight:800;font-size:clamp(1.8rem,3.4vw,2.6re
     },
     truck_cold: {
       stamp: 'MOBILE · COLD PREP',
+      links: [{t:'ECDOH Foodservice Facility Permit Application (tick “Mobile Food Truck”)', u:'https://www3.erie.gov/envhealth/sites/www3.erie.gov.envhealth/files/2023-03/foodservicepermitapplication.pdf'}],
       title: 'Mobile Food Service Permit (No Suppression Hood)',
       body: 'If you\'re not cooking with grease-producing equipment on the truck, you\'ll still need an Erie County DOH mobile permit and a commissary agreement — but you can likely skip the ANSUL system, which saves serious money. Bonus: CCK truck members get free vending hotspots along Main Street.',
       cta: 'We help our truck members sort out which towns require what, and we write the commissary letters ourselves.',
@@ -178,24 +195,29 @@ h2{font-family:var(--display);font-weight:800;font-size:clamp(1.8rem,3.4vw,2.6re
     },
     cottage: {
       stamp: 'HOME PROCESSOR',
+      links: [{t:'NYS Home Processing \u2014 approved foods & requirements', u:'https://agriculture.ny.gov/food-safety/home-processing'},{t:'Home Processor Registration Request Form (free)', u:'https://agriculture.ny.gov/food-safety/home-processor-registration-request-form'}],
       title: 'You May Qualify for the NYS Home Processor Exemption',
-      body: 'Certain low-risk, shelf-stable foods — breads, cookies, fruit jams, candy and the like — can be made in your home kitchen under NYS Ag & Markets\' Home Processor exemption, no license fee required. But the exempt product list is strict, and the moment you want commercial equipment, real volume, or a product off the list, you graduate to a 20-C license in a licensed kitchen like CCK.',
-      steps: ['Check the Ag & Markets exempt foods list — your exact product matters','Register as a Home Processor with your Ag & Markets regional office (free)','Label requirements: ingredients, allergens, net weight, your name & address','Outgrowing it? A 20-C license at CCK is the next step — we\'ll walk you through it']
+      flag: 'Two things catch people out. The approved product list is strict — nothing refrigerated, no tempered chocolate for dipping or coating, and a process review is required for shelf-stable items. And the registration goes null and void the moment you hold any Ag &amp; Markets or Health Department license, at which point every item has to be made at the licensed facility instead. Plan ahead too: the Department is currently quoting up to 16 weeks to review a request.',
+      body: 'Certain low-risk, shelf-stable foods — breads, cookies, fruit jams, candy and the like — can be made in your home kitchen under the NYS Home Processor exemption. Registration is free and does not expire, and it covers retail and wholesale at agricultural venues, farmers markets, craft fairs, home delivery, and online sales, so long as every sale stays inside New York State. Everything must be pre-packaged and labeled at home; you cannot package at the market.',
+      steps: ['Check your exact product against the approved foods list — it is more specific than people expect','Submit the Home Processor Registration Request to Ag & Markets, Division of Food Safety and Inspection (free)','Allow up to 16 weeks for review — start before you need it','Label requirements: ingredients in order of weight, allergens, net weight, your name & address','Outgrowing it, or want a product off the list? A 20-C license at CCK is the next step — we\'ll walk you through it']
     },
     twentyc_process: {
       stamp: '20-C + PROCESS REVIEW',
+      links: [{t:'Article 20-C Food Processing Establishment License Application', u:'https://agriculture.ny.gov/food-safety/application-food-processing-establishment-license-article-20-c'}],
       title: '20-C License + Cornell Scheduled Process Review',
       body: 'Hot sauce, salsa, pickles, dressings — anything acidified or pH-dependent — can\'t be made under the home exemption. Before Ag & Markets will issue your 20-C, your recipe needs a scheduled process review from a recognized process authority: the Cornell Food Venture Center (reached through Cornell Cooperative Extension). Many CCK members have been through exactly this — we know the drill.',
       steps: ['Submit your recipe & process to the Cornell Food Venture Center for review','Receive your scheduled process letter (pH targets, fill temps, hold times)','Apply for the Ag & Markets Article 20-C license','Schedule your kitchen inspection at CCK','Label review: ingredients, allergens, net weight, business address']
     },
     twentyc: {
       stamp: 'AG & MARKETS 20-C',
+      links: [{t:'Article 20-C Food Processing Establishment License Application', u:'https://agriculture.ny.gov/food-safety/application-food-processing-establishment-license-article-20-c'}],
       title: 'NYS Article 20-C Food Processing License',
       body: 'Selling packaged food wholesale, at real volume, or anything refrigerated or frozen puts you under NYS Agriculture & Markets — and a 20-C license requires processing in a licensed commercial kitchen, which is exactly what CCK is.',
       steps: ['Apply for the Ag & Markets Article 20-C license','Schedule your kitchen inspection at CCK','Plan your cold chain: production, storage & transport temps','Label review: ingredients, allergens, net weight, business address']
     },
     mealprep_packaged: {
       stamp: '20-C \u00b7 PACKAGED MEALS',
+      links: [{t:'Article 20-C Food Processing Establishment License Application', u:'https://agriculture.ny.gov/food-safety/application-food-processing-establishment-license-article-20-c'},{t:'ECDOH Foodservice Facility Permit Application', u:'https://www3.erie.gov/envhealth/sites/www3.erie.gov.envhealth/files/2023-03/foodservicepermitapplication.pdf'}],
       title: 'Likely Article 20-C \u2014 and possibly both',
       cta: 'We have members on both sides of this line, and we can help you work out which side you are on.',
       body: 'Meal prep sits right on the seam between the two regulators. Food served for immediate consumption is Erie County DOH territory. Food produced in batches, packaged, labeled and sold to be refrigerated or frozen and reheated later looks like food processing \u2014 which is NYS Agriculture & Markets, Article 20-C. Plenty of meal prep businesses end up holding both: a DOH permit for the kitchen operation and a 20-C for the packaged product line.',
@@ -204,8 +226,9 @@ h2{font-family:var(--display);font-weight:800;font-size:clamp(1.8rem,3.4vw,2.6re
     },
     doh: {
       stamp: 'ERIE COUNTY DOH',
+      links: [{t:'ECDOH Foodservice Facility Permit Application (tick \u201cCaterer\u201d)', u:'https://www3.erie.gov/envhealth/sites/www3.erie.gov.envhealth/files/2023-03/foodservicepermitapplication.pdf'}],
       title: 'Food Service Establishment / Catering Permit',
-      body: 'Prepared food served for immediate consumption — catering, meal prep, delivery, ghost kitchen concepts — is regulated by the Erie County Department of Health. You\'ll need a permitted kitchen as your base of operations.',
+      body: 'Prepared food served for immediate consumption — catering, event food, market booths, delivery — is regulated by the Erie County Department of Health. You\'ll need a permitted kitchen as your base of operations. Despite the name, this is the standard permit for most people selling food directly to the public in Erie County, whether you\'re catering a wedding or serving from a booth at a farmers market. Most of our members operate under exactly this one.',
       steps: ['Erie County DOH food service permit application','Base of operations in a permitted kitchen (that\'s us)','Initial on-site inspection — ECDOH meets you at the kitchen','Menu & process review with the sanitarian','Insurance & workers\' comp documentation']
     }
   };
@@ -316,7 +339,12 @@ h2{font-family:var(--display);font-weight:800;font-size:clamp(1.8rem,3.4vw,2.6re
   }
 
   function renderResult(res){
-    var html = '<div class="print-head"><b>Clarence Creative Kitchen</b><br>9580 Main Street, Clarence, NY 14031<br>clarencecreativekitchen.com<br><span id="print-date"></span></div>';
+    var html = '<div class="print-head">'
+      + '<img class="print-logo" src="cck-logo.png" alt="Clarence Creative Kitchen">'
+      + '<div class="print-contact">9580 Main Street, Clarence, NY 14031<br>'
+      + '716-598-3176 &nbsp;\u00b7&nbsp; kitchen@stephendevelopment.com<br>'
+      + 'clarencecreativekitchen.com</div>'
+      + '<span id="print-date"></span></div>';
     html += '<div class="result-stamp">' + res.stamp + '</div>';
     html += '<div class="result-title">' + res.title + '</div>';
     html += '<div class="result-body">' + res.body + '</div>';
@@ -326,6 +354,14 @@ h2{font-family:var(--display);font-weight:800;font-size:clamp(1.8rem,3.4vw,2.6re
     html += '<ul class="result-steps">';
     res.steps.forEach(function(s){ html += '<li>' + s + '</li>'; });
     html += '</ul>';
+    if(res.links && res.links.length){
+      html += '<div class="result-links"><div class="lbl">The forms you need</div>';
+      res.links.forEach(function(l){
+        html += '<a href="' + l.u + '" target="_blank" rel="noopener">' + l.t
+              + '<span class="url">' + l.u + '</span></a>';
+      });
+      html += '</div>';
+    }
     html += '<div class="result-cta"><p>' + (res.cta || 'This is a lot easier with a certified commissary in your corner.') + '</p>'
           + '<a class="btn tomato" id="cck-cta" href="' + SITE_URL + '" target="_top">Let us help you with the process →</a></div>';
     html += '<div class="result-disclaimer">General guidance only — licensing depends on your exact product and process. We\'ll help you confirm the details with ECDOH or Ag &amp; Markets.</div>';
